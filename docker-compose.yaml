@@ -1,0 +1,37 @@
+version: '2.1'
+services:
+    postgres:
+        image: postgres:latest
+        container_name: "postgres"
+        environment:
+            - POSTGRES_USER=airflow
+            - POSTGRES_PASSWORD=airflow
+            - POSTGRES_DB=airflow
+        ports:
+            - "5432:5432"
+        volumes:
+            - ./data/postgres:/var/lib/postgresql/data
+
+    webserver:
+        image: airflow:latest
+        restart: always
+        command: bash -c "airflow db init && airflow webserver"
+        ports:
+            - "8080:8080"
+        depends_on:
+            - postgres
+        volumes:
+            - ./airflow/dags:/opt/airflow/dags
+            - ./airflow/plugins:/opt/airflow/plugins
+            - ./data/logs:/opt/airflow/logs
+
+    scheduler:
+        image: airflow:latest
+        restart: always
+        depends_on:
+            - webserver
+        command: airflow scheduler
+        volumes:
+            - ./airflow/dags:/opt/airflow/dags
+            - ./airflow/plugins:/opt/airflow/plugins
+            - ./data/logs:/opt/airflow/logs

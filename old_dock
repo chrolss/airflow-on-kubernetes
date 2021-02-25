@@ -1,0 +1,11 @@
+FROM continuumio/anaconda3
+
+RUN apt-get update && apt-get -y upgrade && apt-get install -y  nano \
+&& apt-get clean
+
+RUN pip install --upgrade pip
+RUN pip install apache-airflow
+
+COPY bootstrap.sh /bootstrap.sh
+RUN chmod +x /bootstrap.sh
+ENTRYPOINT ["/bootstrap.sh"]
