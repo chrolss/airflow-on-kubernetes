@@ -18,12 +18,13 @@ services:
         command: bash -c "airflow db init && airflow webserver"
         ports:
             - "8080:8080"
+            - "8793:8793"
         depends_on:
             - postgres
         volumes:
-            - ./airflow/dags:/opt/airflow/dags
-            - ./airflow/plugins:/opt/airflow/plugins
-            - ./data/logs:/opt/airflow/logs
+            - ./airflow/dags:/root/airflow/dags
+            - ./airflow/plugins:/root/airflow/plugins
+            - ./data/logs:/root/airflow/logs
 
     scheduler:
         image: airflow:latest
@@ -32,6 +33,6 @@ services:
             - webserver
         command: airflow scheduler
         volumes:
-            - ./airflow/dags:/opt/airflow/dags
-            - ./airflow/plugins:/opt/airflow/plugins
-            - ./data/logs:/opt/airflow/logs
+            - ./airflow/dags:/root/airflow/dags
+            - ./airflow/plugins:/root/airflow/plugins
+            - ./data/logs:/root/airflow/logs
