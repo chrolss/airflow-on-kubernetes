@@ -1,16 +1,16 @@
 # Setting up production grade Airflow with postgresql backend
 
 ## How to run airflow-on-kubernetes
-Inside the project folder, execute `sudo docker-compose up` to create and spin up all services.
-To stop the services without removing any data, execute `sudo docker-compose stop`.
-To restart the services, execute `sudo docker-compose start`.
-To remove all networks, services and containers related to the project, execute `sudo docker-compose down`.
+- Inside the project folder, execute `sudo docker-compose up` to create and spin up all services.
+- To stop the services without removing any data, execute `sudo docker-compose stop`.
+- To restart the services, execute `sudo docker-compose start`.
+- To remove all networks, services and containers related to the project, execute `sudo docker-compose down`.
 
 ## Notes on airflow.cfg
 The default config contains three rows which need editing before it can successfully serve as a basis config for Airflow.
-The `fernet_key` under `[core]` should be commented out, and instead one should set the `AIRFLOW__CORE__FERNET_KEY` environment varible.
-The `secret_key` under `[webserver]` should be commented out, and instead one should set `AIRFLOW__WEBSERVER__SECRET_KEY` environment variable.
-The `sql_alchemy_conn` under `[core]` should be set according to the postgresql section below.
+- The `fernet_key` under `[core]` should be commented out, and instead one should set the `AIRFLOW__CORE__FERNET_KEY` environment varible.
+- The `secret_key` under `[webserver]` should be commented out, and instead one should set `AIRFLOW__WEBSERVER__SECRET_KEY` environment variable.
+- The `sql_alchemy_conn` under `[core]` should be set according to the postgresql section below.
 
 ## Postgresql image & service
 The postgres image is the official postgres supplied image. In the `docker-compose.yaml` we define the postgres service
